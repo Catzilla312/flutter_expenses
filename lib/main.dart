@@ -35,7 +35,7 @@ class MyHomePage extends StatelessWidget {
           title: Text('Flutter App'),
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             Card(
               color: Colors.amber,
@@ -44,9 +44,41 @@ class MyHomePage extends StatelessWidget {
                 width: double.infinity,
               ),
             ),
-            Card(
-              color: Colors.blue,
-              child: Text("List of"),
+            Column(
+              children: transactions.map((trs) {
+                return Card(
+                  child: Row(children: [
+                    Container(
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 2,
+                        ),
+                      ),
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 15,
+                      ),
+                      child: Text(
+                        "\$${trs.amount}",
+                        style: const TextStyle(
+                          color: Colors.amber,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(trs.title),
+                        Text(trs.date.toString()),
+                      ],
+                    ),
+                  ]),
+                );
+              }).toList(),
             ),
           ],
         ));
