@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './transaction.dart';
+import 'models/transaction.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,20 +14,10 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final List<Transaction> transactions = [
-    Transaction(
-      id: 'as',
-      amount: 22,
-      date: DateTime.now(),
-      title: "new shit",
-    ),
-    Transaction(
-      id: 'aws',
-      amount: 26.8,
-      date: DateTime.now(),
-      title: "old shit",
-    )
-  ];
+  // final List<Transaction> transactions = [];
+  // late String titleInput;
+  // late String amountInput;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,50 +25,14 @@ class MyHomePage extends StatelessWidget {
           title: Text('Flutter App'),
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Card(
               color: Colors.amber,
               child: Container(
-                child: Text("Chart"),
+                child: const Text("Chart"),
                 width: double.infinity,
               ),
-            ),
-            Column(
-              children: transactions.map((trs) {
-                return Card(
-                  child: Row(children: [
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2,
-                        ),
-                      ),
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 15,
-                      ),
-                      child: Text(
-                        "\$${trs.amount}",
-                        style: const TextStyle(
-                          color: Colors.amber,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(trs.title),
-                        Text(trs.date.toString()),
-                      ],
-                    ),
-                  ]),
-                );
-              }).toList(),
             ),
           ],
         ));
