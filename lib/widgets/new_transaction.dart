@@ -30,6 +30,15 @@ class _NewTransactionState extends State<NewTransaction> {
     Navigator.of(context).pop();
   }
 
+  void _presentDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2022),
+      lastDate: DateTime(2024),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -53,6 +62,16 @@ class _NewTransactionState extends State<NewTransaction> {
               keyboardType: TextInputType.number,
               onSubmitted: (_) => submitData(),
               // onChanged: (val) => amountInput = val,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("nope"),
+                ElevatedButton(
+                  onPressed: _presentDatePicker,
+                  child: Text("Select date"),
+                ),
+              ],
             ),
             TextButton(
               style: TextButton.styleFrom(
