@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_aar/models/transaction.dart';
+import 'package:flutter_aar/widgets/chart_bar.dart';
 import 'package:intl/intl.dart';
 
 class Chart extends StatelessWidget {
@@ -23,12 +24,16 @@ class Chart extends StatelessWidget {
           totalSum += recentTransactions[i].amount;
         }
       }
-
       return {
         'day': DateFormat.E().format(weekDay).substring(0, 1).substring(0, 1),
-        'amount': 999.99
+        'amount': totalSum
       };
     });
+  }
+
+  double get getMaxSpent {
+    return recentTransactions.fold(
+        0.0, (previousValue, element) => previousValue += element.amount);
   }
 
   @override
@@ -36,10 +41,23 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 3,
       margin: const EdgeInsets.all(20),
-      child: Row(
-        children: groupedTransactionValues.map((e) {
-          return Text("${e['day']} : ${e['amount'].toString()}");
-        }).toList(),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: groupedTransactionValues.map((e) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                label: e["day"].toString(),
+                spentAmount: (e['amount'] as double),
+                spentPerc: getMaxSpent == 0.0
+                    ? 0.0
+                    : (e['amount'] as double) / getMaxSpent,
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

@@ -27,40 +27,59 @@ class TransactionList extends StatelessWidget {
           : ListView.builder(
               itemBuilder: (context, index) {
                 return Card(
-                  child: Row(children: [
-                    Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                          width: 2,
-                        ),
-                      ),
-                      margin: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 15,
-                      ),
-                      child: Text(
-                        "\$${userTransactions[index].amount.toStringAsFixed(1)}",
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                  elevation: 10,
+                  margin: const EdgeInsets.all(10),
+                  child: ListTile(
+                    title: Text(userTransactions[index].title),
+                    subtitle: Text(DateFormat.MMMMEEEEd()
+                        .format(userTransactions[index].date)),
+                    leading: CircleAvatar(
+                      radius: 50,
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: FittedBox(
+                          child: Text(
+                              "\$${userTransactions[index].amount.toStringAsFixed(1)}"),
                         ),
                       ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(userTransactions[index].title),
-                        Text(
-                          DateFormat.MMMMEEEEd()
-                              .format(userTransactions[index].date),
-                        ),
-                      ],
-                    ),
-                  ]),
+                  ),
                 );
+                // return Card(
+                //   child: Row(children: [
+                //     Container(
+                //       padding: const EdgeInsets.all(5),
+                //       decoration: BoxDecoration(
+                //         border: Border.all(
+                //           color: Theme.of(context).primaryColor,
+                //           width: 2,
+                //         ),
+                //       ),
+                //       margin: const EdgeInsets.symmetric(
+                //         vertical: 10,
+                //         horizontal: 15,
+                //       ),
+                //       child: Text(
+                //         "\$${userTransactions[index].amount.toStringAsFixed(1)}",
+                //         style: TextStyle(
+                //           color: Theme.of(context).primaryColor,
+                //           fontWeight: FontWeight.bold,
+                //           fontSize: 20,
+                //         ),
+                //       ),
+                //     ),
+                //     Column(
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //       children: [
+                //         Text(userTransactions[index].title),
+                //         Text(
+                //           DateFormat.MMMMEEEEd()
+                //               .format(userTransactions[index].date),
+                //         ),
+                //       ],
+                //     ),
+                //   ]),
+                // );
               },
               itemCount: userTransactions.length,
             ),
