@@ -1,42 +1,66 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
+class NewTransaction extends StatefulWidget {
+  final Function addTx;
+
+  const NewTransaction(this.addTx, {super.key});
+
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
   final titleController = TextEditingController();
+
   final amountController = TextEditingController();
+
+  void submitData() {
+    final enteredTitle = titleController.text;
+    final enteredAmount = double.parse(amountController.text);
+
+    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+      return;
+    }
+
+    widget.addTx(
+      enteredTitle,
+      enteredAmount,
+    );
+
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 5,
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
+          children: <Widget>[
             TextField(
+              decoration: InputDecoration(labelText: 'Title'),
               controller: titleController,
-              decoration: const InputDecoration(
-                labelText: "Title",
-              ),
-              onChanged: (value) {
-                // titleInput = value;
-              },
+              onSubmitted: (_) => submitData(),
+              // onChanged: (val) {
+              //   titleInput = val;
+              // },
             ),
             TextField(
-                controller: amountController,
-                decoration: const InputDecoration(
-                  labelText: "Amount",
-                ),
-                onChanged: (value) {
-                  // amountInput = value;
-                }),
+              decoration: InputDecoration(labelText: 'Amount'),
+              controller: amountController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => submitData(),
+              // onChanged: (val) => amountInput = val,
+            ),
             TextButton(
               style: TextButton.styleFrom(
                 primary: Colors.purple,
               ),
-              onPressed: () {
-                print(titleController.text);
-              },
+              onPressed: submitData,
               child: const Text("Add"),
-            )
+            ),
           ],
         ),
       ),
